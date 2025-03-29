@@ -1,0 +1,119 @@
+@charset "UTF-8";
+
+#box {
+	display: grid;
+	grid-template-columns: 230px auto;
+	height : 500px;
+	margin: 15px;
+	
+}
+
+#menubar {
+	background-color: #BFA78A;
+}
+
+#memoscreen {
+	background-color: #f8d085;
+}
+
+#searchInput {
+	margin: 20px 10px;
+	border-radius: 20px;
+	border: 0px;
+	width : 120px;
+	height: 20px;
+	
+}
+
+.searching {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.search {
+	display: flex;
+}
+
+
+#addCatdiv {
+	display: inline-block;
+	text-align: center;
+}
+#searchButton {
+	height: 25px;
+	width: 40px;
+}
+#searchButton, #addCategory, #addMemo
+{
+	border-radius: 10px;
+	border: 0px;
+	cursor: pointer;
+}
+
+#searchButton:hover, #addCategory:hover, #addMemo:hover,
+.leftButtons:hover, .rightButtons:hover {
+	background-color: #594327;
+	color: white;
+	transition: 0.4s
+}
+
+#addMemo {
+	margin-left: 25px;
+	margin-right: 10px;
+}
+
+#curCategory {
+	padding: 20px 30px;
+}
+
+#curMemo {
+	margin: 30px;
+	height: 330px;
+	
+}
+#writeMemo, #memoTitle {
+	border: 0px;
+	margin : 10px;
+	background-color: #f8d085;
+}
+
+.buttons{
+	display: flex;
+	justify-content: space-between;
+	margin : 0px 30px 0px 30px;
+}
+#leftButtons, #rightButtons {
+	display: flex;
+}
+.leftButtons, .rightButtons {
+	margin: 0px 10px 0px 5px;
+	border: 0px;
+	border-radius: 10px;
+	height: 20px;
+	cursor: pointer;
+}
+
+#memoTitle {
+	height: 40px;
+	font-size: 30px;
+}
+
+.title button {
+	background-color: transparent;
+	border:0px;
+	cursor: pointer;
+}
+#screenUpper {
+	display:flex;
+	justify-content: space-between;
+	border-bottom: 2px solid #594327;
+	align-items: center;
+}
+.screenUpper {
+	display: flex;
+	margin-right: 30px;
+}
+
+#unlock {
+	cursor: pointer;
+}

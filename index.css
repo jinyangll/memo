@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+#box {
+	display: grid;
+	grid-template-columns: 230px auto;
+	height : 500px;
+	margin: 15px;
+	
+}
+
+#menubar {
+	background-color: #BFA78A;
+}
+
+#memoscreen {
+	background-color: #f8d085;
+}
+
+#searchInput, #addCategory {
+	margin: 20px 10px;
+	border-radius: 20px;
+	border: 0px;
+	width : 120px;
+	height: 20px;
+	
+}
+
+.searching {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.search {
+	display: flex;
+}
+#addCategory {
+	margin: 0px 115px;
+	width : 100px;
+}
+
+#searchButton {
+	height: 25px;
+	width: 40px;
+}
+#searchButton, #addCategory
+{
+	border-radius: 10px;
+	border: 0px;
+	cursor: pointer;
+}
+
+#searchButton:hover, #addCategory:hover {
+	background-color: #594327;
+	color: white;
+	transition: 0.4s
+}
+
+#curCategory {
+	padding: 20px 30px;
+	border-bottom: 2px solid #594327;
+}
+
+#curMemo {
+	padding: 30px;
+}
