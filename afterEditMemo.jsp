@@ -59,7 +59,7 @@ PreparedStatement pstmt = null;
 
 try {
 	Class.forName("org.mariadb.jdbc.Driver");
-	String url = "jdbc:mariadb://localhost:3305/memo?useSSL=false";
+	String url = "jdbc:mariadb://localhost:3305/memodb?useSSL=false";
 	con = DriverManager.getConnection(url, "admin", "1234");
 
 	String sql = "UPDATE note SET title=?, content=?, bg_color=?, category_id=?, is_locked=?, is_favorite=? WHERE id=?";
@@ -101,8 +101,10 @@ ResultSet categoryRs = categoryStmt.executeQuery();
 
 	<div style="height: 450px">
 	<div class="searching">
-		<input type="text" id="searchInput" class="search">
-		<button id="searchButton" class="search">검색</button>
+		<form method="get" action="searchMemo.jsp" style="margin-bottom: 10px;">
+		    <input type="text" id="searchInput" name="keyword" class="search" placeholder="검색어를 입력하세요">
+		    <button type="submit" id="searchButton" class="search">검색</button>
+		</form>
 	</div>
 	
 		<div>
@@ -173,7 +175,9 @@ ResultSet categoryRs = categoryStmt.executeQuery();
 		<button id="addMemo">Add Memo</button>
 		</form> -->
 		
+		<form action="addCategory.jsp" method="post"  id="addCatWrap">
 		<button id="addCategory">Add Category</button>
+		</form>
 	</div>
 </div>
 

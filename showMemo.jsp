@@ -7,7 +7,7 @@
 
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="addMemo.css" type="text/css">
+<link rel="stylesheet" href="showMemo.css" type="text/css">
 <!-- <script src="addMemo.js"></script> -->
 
 <title>showMemo</title>
@@ -27,7 +27,7 @@ boolean is_favorite = false, is_locked = false;
 
 try {
     Class.forName("org.mariadb.jdbc.Driver");
-    String url = "jdbc:mariadb://localhost:3305/memo?useSSL=false";
+    String url = "jdbc:mariadb://localhost:3305/memodb?useSSL=false";
     con = DriverManager.getConnection(url, "admin", "1234");
 
     String sql = "SELECT * FROM note WHERE id = ?";
@@ -59,9 +59,9 @@ try {
 %>
 
 
-<script>
+<%-- <script>
     alert("is_favorite: <%= is_favorite %>\nis_locked: <%= is_locked %>");
-</script>
+</script> --%>
 
 
 
@@ -71,8 +71,10 @@ try {
 
 	<div style="height: 450px">
 	<div class="searching">
-		<input type="text" id="searchInput" class="search">
-		<button id="searchButton" class="search">검색</button>
+			<form method="get" action="searchMemo.jsp" style="margin-bottom: 10px;">
+			    <input type="text" id="searchInput" name="keyword" class="search" placeholder="검색어를 입력하세요">
+			    <button type="submit" id="searchButton" class="search">검색</button>
+			</form>
 	</div>
 	
 		<div>
@@ -108,6 +110,21 @@ try {
 			noteRs.close();
 			noteStmt.close();
 	%>
+	
+		<div id="catEdit">
+			    <form action="editCategory.jsp" method="post" style="display:inline;">
+			        <input type="hidden" name="categoryId" value="<%= categoryId %>">
+			        <button type="submit" id="catNameEdit">카테고리 이름 변경</button>
+			    </form>
+			
+			    <form action="deleteCategory.jsp" method="post" style="display:inline;" onsubmit="return confirm('정말 삭제하시겠습니까?');">
+			        <input type="hidden" name="categoryId" value="<%= categoryId %>">
+			        <button type="submit" id="catDelete">카테고리 삭제</button>
+			    </form>
+			</div>
+		
+	
+	
 		<form action="addMemo.jsp" method="post"  id="addMemoWrap">
 		<input type="hidden" name="curCategoryId" value="<%= categoryId %>">
 		<button id="addMemo" type="submit">Add Memo</button>
@@ -144,11 +161,11 @@ try {
 	
 	<div id="addCatDiv">
 	
-<!-- 		<form action="addMemo.jsp" method="post" style="display:inline-block">
-		<button id="addMemo">Add Memo</button>
-		</form> -->
 		
+		<form action="addCategory.jsp" method="post"  id="addCatWrap">
 		<button id="addCategory">Add Category</button>
+		</form>
+		
 	</div>
 </div>
 

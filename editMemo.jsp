@@ -37,8 +37,9 @@ function toggleLock() {
         isLockedInput.value = "1";
     }
     
-    alert("is_locked now: " + isLockedInput.value);
-}
+/*     alert("is_locked now: " + isLockedInput.value);*/
+
+} 
 
 
 </script>
@@ -59,7 +60,7 @@ boolean is_favorite = false, is_locked = false;
 
 try {
     Class.forName("org.mariadb.jdbc.Driver");
-    String url = "jdbc:mariadb://localhost:3305/memo?useSSL=false";
+    String url = "jdbc:mariadb://localhost:3305/memodb?useSSL=false";
     con = DriverManager.getConnection(url, "admin", "1234");
 
     String sql = "SELECT * FROM note WHERE id = ?";
@@ -95,8 +96,10 @@ try {
 
 	<div style="height: 450px">
 	<div class="searching">
-		<input type="text" id="searchInput" class="search">
-		<button id="searchButton" class="search">검색</button>
+		<form method="get" action="searchMemo.jsp" style="margin-bottom: 10px;">
+		    <input type="text" id="searchInput" name="keyword" class="search" placeholder="검색어를 입력하세요">
+		    <button type="submit" id="searchButton" class="search">검색</button>
+		</form>
 	</div>
 	
 		<div>
@@ -130,6 +133,20 @@ try {
 			noteRs.close();
 			noteStmt.close();
 	%>
+	
+			<div id="catEdit">
+			    <form action="editCategory.jsp" method="post" style="display:inline;">
+			        <input type="hidden" name="categoryId" value="<%= categoryId %>">
+			        <button type="submit" id="catNameEdit">카테고리 이름 변경</button>
+			    </form>
+			
+			    <form action="deleteCategory.jsp" method="post" style="display:inline;" onsubmit="return confirm('정말 삭제하시겠습니까?');">
+			        <input type="hidden" name="categoryId" value="<%= categoryId %>">
+			        <button type="submit" id="catDelete">카테고리 삭제</button>
+			    </form>
+			</div>
+	
+	
 		<form action="addMemo.jsp" method="post"  id="addMemoWrap">
 		<input type="hidden" name="curCategoryId" value="<%= categoryId %>">
 		<button id="addMemo" type="submit">Add Memo</button>
@@ -162,7 +179,9 @@ try {
 	</div>
 	
 	<div id="addCatDiv">
-		<button id="addCategory">Add Category</button>
+		<form action="addCategory.jsp" method="post"  id="addCatWrap">
+			<button id="addCategory">Add Category</button>
+		</form>
 	</div>
 </div>
 
@@ -193,29 +212,11 @@ try {
 			
 			<div id="curDate"><%= date %></div>
 			
-			<!-- 내용 textarea -->
 			<textarea id="writeMemo" name="memoContent" rows="15" style="width: 100%; font-size:1.1em;"><%= content %></textarea>
 			
 			
 			
-			<div id="leftButtons">
-<!-- 			<input type="button" class="leftButtons" value="Time Stamp">
- -->			<input type="color" class="leftButtons" id='color' name="color" value="<%=bg_color%>">
-			<input type="file" class="leftButtons" id="photo" value="photo" name="photo">
-			</div>
 			
-			
-			
-<%-- 			<!-- 배경색 선택 -->
-			<!-- <label for="bg_color">배경색: </label> -->
-			<input type="color" id="bg_color" name="bg_color" value="<%= bg_color %>">
-			
-			<!-- 사진 업로드 -->
-			<!-- <label for="photo">사진 업로드: </label> -->
-			<input type="file" id="photo" name="photo" accept="image/*">
-			
-			<!-- 카테고리 변경 (셀렉트박스) -->
-			<!-- <label for="category_id">카테고리: </label> --> --%>
 			<select id="category_id" name="category_id">
 			<%
 				// 카테고리 목록을 다시 불러와서 select 옵션으로 넣기
@@ -238,28 +239,29 @@ try {
 					}
 				} catch (Exception e) {
 					out.println(e.getMessage());
-				} finally {
-					if (rsCat != null) rsCat.close();
-					if (psCat != null) psCat.close();
-					if (con2 != null) con2.close();
-				}
+				} 
 			%>
 			</select>
 		</div>
 		
-		<div class="buttons">
-			<div id="leftButtons" style="visibility:hidden;">
-				<input type="button" class="leftButtons" value="Time Stamp">
-			</div>
-			
-	 		<div id="rightButtons">
-				<input class="rightButtons" type="submit" value="저장"/>
-				<a href="showMemo.jsp?id=<%=id%>"><button type="button" class="rightButtons">취소</button></a>
+			<div class="buttons">
+				<div id="leftButtons">
+					<input type="color" class="leftButtons" id='color' name="color" value="#f8d085">
+					<input type="file" class="leftButtons" id="photo" value="photo" name="photo">
+				</div>
+				
+				<div id="rightButtons">
+					
+					<input class="rightButtons" type="submit" value="save"/>
+					<input type="hidden" name="curCategoryId"  id="curCategoryId" value="<%=curCategoryId %>">
+					<button type="button" class="rightButtons" onclick="history.back()">Cancel</button>
+				</div>
 				
 			</div>
-		</div>
-	</form>
-</div>
-</div>
+				
+		
+		</form>
+	</div>
+	</div>
 </body>
 </html>

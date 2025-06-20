@@ -1,21 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    import="java.sql.*" %>
-
+<%@ page contentType="text/html; charset=UTF-8" import="java.sql.*" %>
 <%
-
 request.setCharacterEncoding("utf-8");
+String keyword = request.getParameter("keyword");
 
 Class.forName("org.mariadb.jdbc.Driver");
-
 String url = "jdbc:mariadb://localhost:3305/memodb?useSSL=false";
-
 Connection con = DriverManager.getConnection(url, "admin", "1234");
 
-String categorySql = "SELECT id, name FROM category";
-PreparedStatement categoryStmt = con.prepareStatement(categorySql);
-ResultSet categoryRs = categoryStmt.executeQuery();
+String sql = "SELECT id, title, content FROM note WHERE title LIKE ? OR content LIKE ?";
+PreparedStatement pstmt = con.prepareStatement(sql);
+pstmt.setString(1, "%" + keyword + "%");
+pstmt.setString(2, "%" + keyword + "%");
 
-
+ResultSet rs = pstmt.executeQuery();
 %>
 
 
@@ -27,7 +24,7 @@ ResultSet categoryRs = categoryStmt.executeQuery();
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="index.css" type="text/css">
-<title>Memo</title>
+<title>afterSearch</title>
 </head>
 
 
@@ -47,31 +44,8 @@ ResultSet categoryRs = categoryStmt.executeQuery();
 		</div>
 
 	<div>
-	<%
-	while(categoryRs.next()){ 
-		int categoryId = categoryRs.getInt("id");
-		String categoryName = categoryRs.getString("name");
-	%>
-		<details class="categoryDetails" data-category-id="<%= categoryId %>">
-			<summary class="category"><%=categoryName %></summary>
-		
-		<%
-		String noteSql = "SELECT id, title FROM note WHERE category_id=?";
-		PreparedStatement noteStmt = con.prepareStatement(noteSql);
-		noteStmt.setInt(1, categoryId);
-		ResultSet noteRs = noteStmt.executeQuery();
-
-		while (noteRs.next()) {
-		    int noteId = noteRs.getInt("id");
-		    String noteTitle = noteRs.getString("title");
-		%>
-		    <div><a class="content" href="showMemo.jsp?id=<%= noteId %>"><%= noteTitle %></a></div>
-		<%
-		}
-			noteRs.close();
-			noteStmt.close();
-	%>
-		<div id="catEdit">
+	
+		<%-- <div>
 		    <form action="editCategory.jsp" method="post" style="display:inline;">
 		        <input type="hidden" name="categoryId" value="<%= categoryId %>">
 		        <button type="submit" id="catNameEdit">카테고리 이름 변경</button>
@@ -90,17 +64,9 @@ ResultSet categoryRs = categoryStmt.executeQuery();
 			</form>
 		</div>
 		
-		<br>
-
-	</details>
-<%
-
-	}
-	categoryRs.close();
-	categoryStmt.close();
-	con.close();
-%>
+		<br> --%>
 	
+
 	
 	</div>
 	
@@ -120,10 +86,31 @@ ResultSet categoryRs = categoryStmt.executeQuery();
 	
 </div>
 <div id="memoscreen">
-	<div id="curCategory" style="height:21px;"></div>
+	<div id="curCategory" style="height:21px;">"<%= keyword %>" 검색 결과</div>
 	<div id="curMemo">
-		메모 관리 프로그램에 오신 것을 환영합니다. <br>
-		메모를 추가하시려면 카테고리를 먼저 선택해주세요.
+		 <%
+        boolean hasResult = false;
+        while (rs.next()) {
+            hasResult = true;
+            int id = rs.getInt("id");
+            String title = rs.getString("title");
+            String content = rs.getString("content");
+        %>
+            <div style="margin-bottom: 10px;">
+                <a href="showMemo.jsp?id=<%= id %>" style="font-size: 1.2em; font-weight: bold;"><%= title %></a><br>
+                <div style="font-size: 0.9em; color: gray;"><%= content.length() > 100 ? content.substring(0, 100) + "..." : content %></div>
+            </div>
+        <% 
+        }
+        if (!hasResult) {
+        %>
+            <p>검색 결과가 없습니다.</p>
+        <%
+        }
+        rs.close();
+        pstmt.close();
+        con.close();
+        %>
 	
 	</div>
 </div>
@@ -133,5 +120,21 @@ ResultSet categoryRs = categoryStmt.executeQuery();
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

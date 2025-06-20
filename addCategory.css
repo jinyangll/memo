@@ -25,17 +25,25 @@
 }
 
 #searchInput, #catName {
-	margin: 20px 10px;
+	margin: 10px 10px; 
 	border-radius: 20px;
 	border: 0px;
 	width : 150px;
 	height: 20px;
 }
+
+.searching form {
+    display: flex;
+    gap: 5px;
+    align-items:center;
+}
+
 #catName {
 	width : 200px;
 }
 
-#searchButton, #addCategory, #cancel, #addMemo
+#searchButton, #addCategory, #cancel, #addMemo,
+#catNameEdit, #catDelete
 {
 	border-radius: 10px;
 	border: 0px;
@@ -62,7 +70,7 @@
 }
 
 #searchButton:hover, #addCategory:hover,
-#cancel:hover , #addMemo:hover{
+#cancel:hover , #addMemo:hover, #catNameEdit:hover, #catDelete:hover{
 	background-color: #594327;
 	color: white;
 	transition: 0.4s
@@ -79,6 +87,17 @@
 	height: 330px;
 }
 
+#addMemo,  #catNameEdit, #catDelete {
+	margin-right: 15px;
+	float: right;
+	margin-bottom: 5px;
+}
+
+#catEdit {
+	height: 60px;
+}
+
+
 #addCatDiv {
 	/* position: relative;
 	text-align: right;
@@ -89,6 +108,7 @@
 	display: flex;
 	justify-content: center;
 	gap: 10px;
+	margin-bottom: 10px;
 }
 
 /* #addCategory, #cancel {

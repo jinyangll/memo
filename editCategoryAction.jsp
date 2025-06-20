@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" import="java.sql.*" %>
 <%
 request.setCharacterEncoding("utf-8");
-int id = Integer.parseInt(request.getParameter("id"));
+int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+String newName = request.getParameter("newName");
 
 Connection con = null;
 PreparedStatement pstmt = null;
@@ -11,14 +12,15 @@ try {
     String url = "jdbc:mariadb://localhost:3305/memodb?useSSL=false";
     con = DriverManager.getConnection(url, "admin", "1234");
 
-    String sql = "DELETE FROM note WHERE id=?";
+    String sql = "UPDATE category SET name = ? WHERE id = ?";
     pstmt = con.prepareStatement(sql);
-    pstmt.setInt(1, id);
+    pstmt.setString(1, newName);
+    pstmt.setInt(2, categoryId);
     pstmt.executeUpdate();
 
-    response.sendRedirect("index.jsp"); // 메인 화면으로 이동
-} catch (Exception e) {
-    out.println( e.getMessage());
-} 
+    response.sendRedirect("index.jsp");
 
+} catch (Exception e) {
+    out.println("오류 발생: " + e.getMessage());
+}
 %>

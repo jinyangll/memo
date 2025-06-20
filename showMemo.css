@@ -16,6 +16,12 @@
 	background-color: #f8d085;
 }
 
+.searching form {
+    display: flex;
+    gap: 5px;
+    align-items:center;
+}
+
 #searchInput {
 	margin: 10px 10px;
 	border-radius: 20px;
@@ -50,11 +56,7 @@
 	margin-right: 30px;
 }
 
-.searching form {
-    display: flex;
-    gap: 5px;
-    align-items:center;
-}
+
 
 
 
@@ -87,7 +89,10 @@
 	height: 60px;
 }
 
-
+/* #addMemo {
+	margin-left: 25px;
+	margin-right: 10px;
+} */
 
 #curCategory {
 	padding: 20px 30px;
@@ -109,9 +114,10 @@
 }
 #leftButtons, #rightButtons {
 	display: flex;
+	float: right;
+	margin-top: -10px;
+	margin-right: 5px;
 }
-
-
 .leftButtons, .rightButtons {
 	margin: 0px 10px 0px 5px;
 	border: 0px;
@@ -125,7 +131,7 @@
 	font-size: 30px;
 }
 
-.title #button {
+.title button {
 	background-color: transparent;
 	border:0px;
 	cursor: pointer;
