@@ -8,23 +8,34 @@
 	
 }
 
+
+/* #addMemo{
+ 	background-color:red !important;
+} */
+
 #menubar {
 	background-color: #BFA78A;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;;
 }
 
 #memoscreen {
 	background-color: #f8d085;
 }
 
-#searchInput {
+#searchInput, #catName {
 	margin: 20px 10px;
 	border-radius: 20px;
 	border: 0px;
 	width : 150px;
 	height: 20px;
 }
+#catName {
+	width : 200px;
+}
 
-#searchButton, #addCategory, #addMemo
+#searchButton, #addCategory, #cancel, #addMemo
 {
 	border-radius: 10px;
 	border: 0px;
@@ -51,20 +62,12 @@
 }
 
 #searchButton:hover, #addCategory:hover,
-#addMemo:hover {
+#cancel:hover , #addMemo:hover{
 	background-color: #594327;
 	color: white;
 	transition: 0.4s
 }
 
-#addCatDiv {
-	text-align: right;
-}
-
-#addMemo, #addCategory {
-	margin-right: 15px;
-	float: right;
-}
 
 #curCategory {
 	padding: 20px 30px;
@@ -74,4 +77,34 @@
 #curMemo {
 	margin: 30px;
 	height: 330px;
+}
+
+#addCatDiv {
+	/* position: relative;
+	text-align: right;
+	display: flex;
+	justify-content: flex-end;;
+	gap: 10px; */
+	
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+/* #addCategory, #cancel {
+	margin-right: 10px;
+	position: relative;
+	top: -20px;
+} */
+
+#addCategoryWrap {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 2px solid #a99174; /* 구분선(optional) */
+}
+
+#inputWrapper {
+	margin-bottom: 10px;
 }
